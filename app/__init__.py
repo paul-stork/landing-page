@@ -16,3 +16,5 @@ def create_app():
     
     from .main.main import main
     app.register_blueprint(main)
+    
+    return app
