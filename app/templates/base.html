@@ -10,14 +10,34 @@
         <title>Paul Stork Labs</title>
         <meta name="description" content="This is the landing page for Paul Stork Labs portfolio site.">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="">
+
+        <!--- CSS Section -->
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css') }}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/base/jquery-ui.min.css">
+
+        <!-- JavaScript Section -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+        <script src="https://unpkg.com/browse/htmx.org@1.8.4/dist/htmx.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
     </head>
     <body>
         <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
-        <h3>This is a placeholder test page.</h3>
-        
-        <script src="" async defer></script>
+
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <img src="{{url_for('static', filename='images/corner_icon_v2.png')}}" 
+            width='50'
+            height='50'
+            alt="Paul Stork Labs Running Man Icon" />
+            <a class="navbar-brand" href="{{ url_for('main.home') }}">
+                Paul Stork Labs
+            </a>
+        </nav>
+
+        <div>{% block content %}{% endblock %}</div>
+
     </body>
 </html>
