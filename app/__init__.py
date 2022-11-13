@@ -17,4 +17,7 @@ def create_app():
     from .main.main import main
     app.register_blueprint(main)
     
+    from .aboutMe.aboutMe import aboutMe
+    app.register_blueprint(aboutMe)
+    
     return app
