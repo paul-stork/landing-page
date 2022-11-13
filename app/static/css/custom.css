@@ -1,0 +1,30 @@
+.img-corners {
+    border-radius: 8px;
+    height:400px;
+    width: 'auto';
+
+}
+.body-background {
+    background-color: #272318;
+    /* background-color: #272727; */
+}
+
+.nav-background{
+    background-color: #695741;
+}
+
+.main-div1{
+    background-color: #7A7C54;
+    border-radius: 25px;
+    padding: 20px;
+    /* width: 200px;
+    height: 150px; */
+}
+
+.main-div2{
+    background-color: #ffffff;
+}
+
+.main-div3{
+    background-color: #ffffff;
+}
