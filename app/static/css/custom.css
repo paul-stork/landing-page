@@ -5,16 +5,18 @@
 
 }
 .body-background {
-    background-color: #272318;
-    /* background-color: #272727; */
+    background-color: #413F3D;
 }
 
 .nav-background{
-    background-color: #695741;
+    background-color: #697184;
+}
+.font-color{
+    color: #F3F3F3;
 }
 
 .main-div1{
-    background-color: #7A7C54;
+    background-color: #b1a6a4;
     border-radius: 25px;
     padding: 20px;
     /* width: 200px;
@@ -22,7 +24,7 @@
 }
 
 .main-div2{
-    background-color: #7A7C54;
+    background-color: #b1a6a4;
     border-radius: 25px;
     padding: 20px;
 }
