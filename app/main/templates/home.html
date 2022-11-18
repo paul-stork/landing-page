@@ -8,10 +8,17 @@
 
         <div class='row main-div1'>
             <div class='col'>
-
                 <p class='text-end'>I'm building my dream, come back soon.
                 </p>
             </div>
+            <div class='col-md-auto'>
+                <img src="{{ url_for('static', filename='images/water_wheel.jpg') }}" class='img-corners' />
+            </div>
+        </div>
+
+        <br />
+
+        <div class='row main-div1'>
             <div class='col-md-auto'>
                 <img src="{{ url_for('static', filename='images/hal-gatewood-v7WyjiyXNr4-unsplash.jpg') }}" class='img-corners' />
 
@@ -26,13 +33,9 @@
         <br />
 
         <div class='row main-div3'>
-            <div class='col-md-auto'>
-                <img src="{{ url_for('static', filename='images/dam.jpg') }}" class='img-corners' />
-                <figcaption><a href="https://www.freepik.com/free-photo/long-exposure-beautiful-shot-lech-river-dam-reutte_7955735.htm#query=dam&position=1&from_view=search&track=sph">Image by wirestock</a> on Freepik</figcaption>
-            </div>
             <div class='col'>
-                <p class='text-end'>How to contact me:</p>
+                <p class='text-center'>How to contact me:</p>
             </div>
-
+        </div>
     </div>
 {% endblock %}
