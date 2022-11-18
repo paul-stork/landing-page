@@ -9,7 +9,7 @@
 }
 
 .nav-background{
-    background-color: #697184;
+    background-color: #2525256b;
 }
 .font-color{
     color: #F3F3F3;
@@ -30,5 +30,7 @@
 }
 
 .main-div3{
-    background-color: #ffffff;
+    background-color: #b1a6a4;
+    border-radius: 25px;
+    padding: 20px;
 }
