@@ -3,20 +3,78 @@
 {% block content %}
     <div class="container">
         <div class='row'>
-            <h4 class = 'text-center font-color'>My home is in the works.</h4>
+            <h4 class = 'text-center font-color'>My Story</h4>
         </div>
 
         <div class='row main-div1'>
-            <div class='col'>
-                <p class='text-end'>I'm building my dream, come back soon.</p>
-            </div>
+            <h5 class='text-center'>A brief story of who I am:</h5>
             <div class='col-md-auto'>
-                <img src="{{ url_for('static', filename='images/hal-gatewood-v7WyjiyXNr4-unsplash.jpg') }}" class='img-corners' />
-
-                <figcaption>Photo by <a href="https://unsplash.com/@halacious?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Hal Gatewood</a> on <a href="https://unsplash.com/s/photos/workbench?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+                <img src="{{ url_for('static', filename='images/the_boys_and_i.jpg') }}" class='img-corners' 
+                style= "height: auto; max-width: 100%;"/>
+                <figcaption>I'm the crazy shaggy one.
                 </figcaption>
             </div>
-        </div> 
+            <div class='col'>
+                <p>My name is Paul Stork. I'm a father of two amazing, rambunctious boys who are every bit of six and nine years old. I love them to death, so everything I do is to care for them. </p>
+                <p>I'm also a veteran of 12 years active duty time in the US Air Force. I love to write code, figure out how things work, and build new tools to help others. I've been a mechanic, intelligence analyst, Remotely Piloted Aircraft Instructor Sensor Operator, Full Motion Video Analyst, Biometrics Analyst, Data Scientist, and Data Analyst in my life. </p>
+                <p>I've also been known to play guitar very poorly, cook the occasional delicious meal, and play lots of video games in my free time.</p>
+                <p>In other words, I've got some good stories to tell.</p>
+            </div>
+        </div>
 
+        <br />
+
+        <div class='row main-div1'>
+            <div class='col'>
+                <h5 class='text-center'>A not so brief story of who I am:</h5>
+                <p>During my freshman year of high school, I learned how to write code. My first program was seeing the words “Hello World” in a command prompt output from a simple C++ program. I then went on to learn things like HTML 4.0 and CSS 1.0.</p>
+                <p>It was during this time that I came to love technology and began to imagine being a programmer. I wanted to create the next big software that people would love to use. I even made a very very very simple static page for my high school marching band. I wish I could say that it was the greatest page that ever existed on the internet... but this was back in 2000... so... yeah...</p>
+            </div>
+            <div class='col-md-auto'>
+                <img src="{{ url_for('static', filename='images/frames_memes.jpg') }}" class='img-corners' style= "height: auto; max-width: 100%;"/>
+            </div>
+        </div>
+
+        <br />
+        
+        <div class='row main-div1'>
+            <div class='row'>
+                <div class='col'>
+                    <p>After high school, I decided to enlist in the US Air Force and serve my country. Initially, I told my recruiter that I wanted to work “around the aircraft”. Thankfully, I didn't say “on the aircraft”. I became an Aerospace Ground Equipment technician. The short version of that job is that I was a mechanic that worked on: electronic components, generators, diesel engines, gas turbine engines, heaters, air conditioners, hydraulic systems, maintenance stands, and anything else that was needed to maintain the aircraft when it wasn't flying. This job taught me how to quickly troubleshoot, identify, and fix problems. </p>
+                </div>
+                <br />
+                <div class='col-md-auto' style= "text-align:right;">
+                    <img src="{{ url_for('static', filename='images/age.jpg') }}" class='img-corners' style= "height: auto; max-width: 75%;"/>
+                </div>
+                <br />
+            </div>
+            
+            <div class='row'>
+                <p>While I did enjoy this job, I decided a change of pace was needed. So, I decided to follow the advice of a friend and become an Imagery Analyst. For six months, I learned how to analyze satellite images that were 20 years old and had the clarity of a Rorshach Ink Blot test. I graduated at the top of my class of stellar performers. This training taught me patience, analysis, and the ability to suspend my bias and only make analytical calls based on what information was in front of me.</p>
+            </div>
+        </div>
+        <br />
+        <div class='row main-div1'>
+            <div class='row'>
+                <div class='col'>
+                    <img src="{{ url_for('static', filename='images/mq_9.jpg') }}" class='img-corners' style= "max-height: 75%; width: auto;"/>
+                </div>
+                <div class='col'>
+                    <p>After I completed all that training, the Air Force decided my talents would be best used in the Remotely Piloted Aircraft (RPA) career field. I was blessed to be assigned to a squadron that was just standing up, so I got to help create a culture of excellence and fostered that in the young men and women I worked with. After flying combat missions in support of Operation Iraqi Freedom and Operation Enduring Freedom for over a year, I had to opportunity to become an Instructor Sensor Operator at the prestigious US Air Force Weapons School on Nellis Air Force Base, Nevada. After learning by fire hose, I quickly became a tactical expert with my weapons system, a tactical leader, and most importantly, I leaned to plan missions and projects to achieve an outcome.</p>
+                </div>
+            </div>
+                <br />
+            <div class='row'>
+                <p>At my 12 year mark, the Air Force and I parted ways, and I became a civilian once again. I worked for various governmental agencies in various Intelligence Analytical roles. I also completed my Bachelors of the Arts in Intelligence Studies while working 12 hour rotating shifts and helping to raise a growing family. It was during this time that I yearned to return to my skills of creating tools for people to use. I stumbled across Python based data sciences. </p>
+            </div>
+            <div class='row'>
+                <p>In my free time, I completed Python based Data Analysis and Data Science courses on datacamp.com. I began to see how using these tools, a person could gain incredible insight from data that their business creates or collects from various sources. I began to voraciously learn to write code, use visualization tools like Tableau, Seaborn, Plotly, and Excel to levels I never had before. I LOVED IT. I loved the challenge of receiving, interpreting, and answering questions that were posed to me by various users. My passion is helping people find answers and I hope to help you find answers as well.</p>
+            </div>
+            <div class='row'>
+                <img src="{{ url_for('static', filename='images/boys_code_review.jpg') }}" class='img-corners' style= "height: auto; max-width: 75%; display:block; margin-left:auto; margin-right:auto;"/>
+                <figcaption style='text-align:center;'>"Are you sure this code is in PEP8 standard, Dad?"</figcaption>
+            </div>
+            </div>
+        </div>
     </div>
 {% endblock %}
