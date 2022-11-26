@@ -30,8 +30,8 @@
         <nav class="navbar navbar-expand-lg navbar-dark nav-background">
             <div class='container-fluid'>
                 <a class="navbar-brand" href="{{ url_for('main.home') }}">
-                    <img src="{{url_for('static', filename='images/graph-xxl.png')}}" 
-                    width='50'
+                    <img src="{{url_for('static', filename='images/muninn and huginn.png')}}" 
+                    width='95'
                     height='50'
                     alt="Paul Stork Labs Running Man Icon" 
                     class="d-inline-block align-text-middle">
@@ -52,5 +52,22 @@
         </nav>
 
         <div>{% block content %}{% endblock %}</div>
+        <br />
+        <div> 
+            <footer>
+                <center>
+                <a href="https://www.linkedin.com/in/pstorklabs" target="_blank">
+                    <img src="{{ url_for('static', filename='images/icons8-linkedin-circled-60.png') }}" 
+                        width='60'
+                        height='60' /></a>
+                &nbsp;
+                <a href='https://github.com/paul-stork' target="_blank">
+                    <img src="{{ url_for('static', filename='images/icons8-github-60.png') }}" 
+                        width='60'
+                        height='60' />
+                </a>
+                </center>
+            </footer>
+        </div>
     </body>
 </html>
