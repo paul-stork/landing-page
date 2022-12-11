@@ -2,6 +2,9 @@ from flask import Flask
 import os
 from flask_bootstrap import Bootstrap5
 from flask_dropzone import Dropzone
+from dotenv import load_dotenv
+
+load_dotenv()
 
 dropzone = Dropzone()
 bootstrap = Bootstrap5()
