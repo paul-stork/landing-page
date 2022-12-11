@@ -12,7 +12,7 @@ bootstrap = Bootstrap5()
 def create_app():
     app = Flask(__name__)
     
-    app.config.from_pyfile('./config/config.cfg')
+    app.config.from_pyfile('settings.py')
     
     bootstrap.init_app(app)
     dropzone.init_app(app)
