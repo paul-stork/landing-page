@@ -26,7 +26,7 @@ def create_app():
     from .aboutMe.aboutMe import aboutMe
     app.register_blueprint(aboutMe)
     
-    from .projects.Projects import projects
+    from .projects.projects import projects
     app.register_blueprint(projects)
     
     return app
