@@ -1,0 +1,260 @@
+{% extends 'base.html' %}
+{% block title %}CoinAPI Pull{% endblock %}
+{% block content %}
+
+<div class="container">
+    <div class='row'>
+        <h4 class = 'text-center font-color'>CoinAPI Data Pull</h4>
+    </div>
+
+    <div class='row main-div1'>
+        <h5 class='text-center'>Create the table</h5>
+        <div class='col'>
+            <p>So, how do we aquire data for the top ten crypto coins?<br /> To start I created an account with <a href='https://www.coinapi.io' target="_blank">CoinAPI</a> to get a secret key to access their API.
+                Once I had this API key, I had to get the data from the API and into a database for storage. So, first I created a PostgreSQL database on <a href='https://www.render.com' target="_blank">Render.com</a>. Being that
+                this was going to be a simple table that would only hold the values from the CoinAPI, I didn't need to go crazy in creating anythin beyond a <a href='https://en.wikipedia.org/wiki/First_normal_form' target="_blank">First Normal Form</a>.
+                My table in this case looks like this:
+            </p>
+        </div>
+        <div class='col-md-auto'>
+            <img src="{{ url_for('static', filename='images/table_created.png') }}" id="myImg" class='img-corners' style= "height: auto; width:75%; max-width: 600px;" />
+            <br />
+            <br />
+            <ul>
+                <li>id: Primary Key of the table, useful for indexing and building SQLAlchemy models in Flask</li>
+                <li>exchange_id: VARCHAR column to hold the shortened version of each coin name</li>
+                <li>rate_close: Numeric column to hold the closing dollar value for that time period</li>
+                <li>rate_high: Numeric column to hold the high dollar value for that time period</li>
+                <li>rate_low: Numeric column to hold the low dollar value for that time period</li>
+                <li>rate_open: Numeric column to hold the opening dollar value for that time period</li>
+                <li>time_close: Datetime in UTC for the closing time of each time period</li>
+                <li>time_open: Datetime in UTC for the opening time of each time period</li>
+                <li>time_period_end: Datetime in UTC for the time period end of each time period</li>
+                <li>time_period_start: Datetime in UTC for the time period start of each time period</li>
+            </ul>
+            </p>
+        </div>
+    </div>
+    <br />
+    <div class='row main-div1'>
+        <h5 class='text-center'>Load the libraries and the secrets</h5>
+        <div class='row'>
+            <div class='col-md-auto'>
+                <p>
+                    Ok, the table's created! Now, we need to populate it.<br />
+                    Our custom script needs to accomplish four things: <br />
+                    <ol>
+                        <li>Connect to the API</li>
+                        <li>Translate the return object into JSON</li>  
+                        <li>Load the JSON into a Pandas DataFrame</li>  
+                        <li>Load that DataFrame into the DB table</li>
+                    </ol>
+                    Sounds simple enough...  (famous last words...) Let's load the usual suspects into our libraries.
+                </p>
+            </div>
+            <br />
+            <div class='col-md-auto'>
+                <img src="{{ url_for('static', filename='images/libraries_loaded.png') }}" id="myImg2" class='img-corners' style= "height: auto; width:75%; max-width: 600px;" />
+            </div>
+        </div>
+
+        <div class='row'>
+            <div class='col-md-auto'>
+                <br />
+                <p>Ok, we've loaded the usual suspects into the script. Using a .env file, we'll store the really important secret sauce:
+                    <ul>
+                        <li>CoinAPI Secret key</li>
+                        <li>Database access info (address, username, and password)</li>
+                    </ul>
+                    Using a .env file will allow me to build and test the site using one set of info to test on and another set for the actual production server.
+                     Don't worry, the production variables are saved in the server environment locked away, safe and sound.
+                    <br />
+                    <br />
+                    Now we can use SQLAlchemy to create the connection engine (create_engine) and the connection we need to write the data to the DB.
+                </p>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class='row main-div1'>
+        <h5 class='text-center'>Create some variables</h5>
+        <div class='row'>
+            <div class='col-md-auto'>
+                <img src="{{ url_for('static', filename='images/create_variables_for_api_call.png') }}" id="myImg3" class='img-corners' style= "height: auto; width:75%; max-width: 600px;" />
+            </div>
+        </div>
+        <div class='row'>
+            <div class='col-md-auto'>
+                <p>
+                    In order to call to the API and get back the proper response we are expecting, we need to pass some information to the API:
+                    <ul>
+                        <li>Today's date in this format: YYYY-MM-DDT00:00:00 ex: 2022-12-12T00:00:00</li>
+                        <li>Yesterdays date in this format: YYYY-MM-DDT00:00:00 ex: 2022-12-11T00:00:00</li>
+                        <li>An empty DataFrame to add values to</li>
+                        <li>i. Because i is important. It can count.</li>
+                    </ul>
+                    I used the datetime.now() function to get today's date in YYYY-mm-dd format. Then I used timedelta(days=1) to subtract exactly one day from todays date. This would automate it so I wouldn't have to adjust the date every day.
+                    <br />
+                    The next step would be to convert today's and yesterday's date into the correct format to include T00:00:00 time so the API call would only get data from yesterday. I used f-strings and .strftime() to accomplish this. 
+                    It looks like this:
+                    <ul>
+                        <li>yesterday = f"{yesterday_date.strftime('%Y-%m-%d')}T00:00:00"</li>
+                        <li>today = f"{datetime.now().strftime('%Y-%m-%d')}T00:00:00"</li>
+                    </ul>
+                    <br />
+                    Ok, we now have datetimes for yesterday and today, an empty DataFrame, and a counter variable. Time go get calling!
+                </p>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class='row main-div1'>
+        <h5 class='text-center'>Call the API</h5>
+        <div class='row'>
+            <div class='col-md-auto'>
+                <img src="{{ url_for('static', filename='images/api_data_pull.png') }}" id="myImg4" class='img-corners' style= "height: auto; width:75%; max-width: 600px;" />
+            </div>
+            <div class='col'>
+                <p>
+                    One of the variables that gets passed to the API call is the specific cryto coin symbol. But, for me to pull multiple coins I would have to change the symbol each time. 
+                    So, to fix this I created a dictionary of number and symbol pairs. This will be useful when we loop over the API call.<br />
+                    <br />
+                    How are we going to be able to run this command multiple time, you might ask? Well, it's time to run a while loop.<br />
+                    <br />
+                    If we look at the while loop of line 46, we see that it essentially says, while i is less than the biggest number in the dictionary repeat everything that follows.<br />
+                    <br />
+                    
+                </p>
+            </div>
+        </div>
+        <div class='row'>
+            <div class='col-md-auto'>
+                <p>
+                    Now that we're in the loop, we set the variable (exchange_id) equal to the value that is paired to the key value. IE if i is equal to 1, the value will be BTC. 
+                    All right, we now have our exchange_id, today, and yesterday. With these variables we use a f-string variable to create the url we're going to call when we run the request.<br />
+                    <br />
+                    The next part we come to is a try. What does try do? Just that. Try doing this bunch of code until an error occurs. 
+                    In this case, I want the code to execute a function called request.get() to send the request and API key to the API and get an response back. 
+                    One curious thing about this url we're using to make the request is this part "period_id=30MIN", this allows me to specify that the data should be based on 30 minute intervals.
+                    Next, we need to translate this response to a JSON object. This is needed to easily translate into a DataFrame. 
+                    We also need to add the exchange_id to each line that goes into the DataFrame. That empty DataFrame we created? Now it's time to add this data into that empty DataFrame using the pd.concat() function.<br />
+                    <br />
+                    Sweet! We have our data for the previous 24 hours in 30 minute increments saved in a Pandas DataFrame... now what..?
+                    <br />
+                    <br />
+                    Before we can load it to the table, we need to make some changes to the DataFrame to make it easier to load to the DB.
+                    This is accomplished by using some trickery in Pandas to rearrange the columns to match the layout of the table itself by running line 64. 
+                    At this point, we're specifying what columns are going into the DataFrame and what order they are in. 
+                    <br />
+                    <br />
+                    If we need to run any additional cleaning or transformation of the data, this would be where it's done. But, thankfully our data is relatively simple so no additional cleaning or prep is needed.
+                    <br />
+                </p>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class='row main-div1'>
+        <h5 class='text-center'>Upload the data to the DB table</h5>
+        <div class='row'>
+            <div class='col-md-auto'>
+                <img src="{{ url_for('static', filename='images/api_data_load_to_table.png') }}" id="myImg5" class='img-corners' style= "height: auto; width:75%; max-width: 600px;" />
+            </div>
+            <div class='col'>
+                <p>
+                    The final task we have before us after we have downloaded and cleaned our data, is to load it into the database table we build specifically for this.
+                    <br />
+                    Thankfully, we are going to use the builtin function that Pandas brings to the party: to_sql(). With just a few options to specify which table the data is going to, the schema the table is in, how we're connecting to the
+                    database, how to react if the table already exists, and finally whether to include the DataFrame index or not. <br />
+                    <br />
+                    Normally, when you write data to a table, you would have to close out the statement by running a commit of some kind, in this case, SQLAlchemy does this for us.
+                </p>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class='row main-div1'>
+        <h5 class='text-center'>Automate the boring stuff</h5>
+        <div class='row'>
+            <div class='col'>
+                <p>
+                    So, we have a script that can connect to an API, pull data, clean the data, and then load it into a DB table. Awesome! But wait, I don't want
+                    to run this everyday manually! Thankfully, automation is available. There are many tools we can use to automate this action AWS, Azure, Google
+                    Cloud, and a host of other services offer tools to run code in an automated fashion. I chose to accomplish this by using <a href='https://www.render.com' target="_blank">Render</a>
+                    to connect to my GitHub, build a pipeline, and use Cron to schedule the job to run automatically at midnight UTC time. Thus, I no longer have to worry
+                    about running this script everyday to update my data that I'm pumping into a dashboard located <a href='{{ url_for('projects.cryptoProject') }}'>here</a>.
+                </p>
+                <br />
+                <p>
+                    If you want a copy of the code I used to build this ETL script you can find it at my <a href='https://github.com/paul-stork/API_pull' target="_blank">CoinAPI Call repo</a>.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal to display a larger image -->
+    <div id="myModal" class="modal">
+
+        <!-- The Close Button -->
+        <span class="close">&times;</span>
+      
+        <!-- Modal Content (The Image) -->
+        <img class="modal-content" id="img01">
+      
+        <!-- Modal Caption (Image Text) -->
+        <div id="caption"></div>
+    </div>
+
+<script>
+        // Get the modal
+    var modal = document.getElementById("myModal");
+
+    // Get the image and insert it inside the modal - use its "alt" text as a caption
+    var img = document.getElementById("myImg");
+    var img2 = document.getElementById('myImg2');
+    var img3 = document.getElementById('myImg3');
+    var img4 = document.getElementById('myImg4');
+    var img5 = document.getElementById('myImg5');
+
+    var modalImg = document.getElementById("img01");
+    var captionText = document.getElementById("caption");
+    img.onclick = function(){
+    modal.style.display = "block";
+    modalImg.src = this.src;
+    captionText.innerHTML = this.alt;
+    }
+
+    img2.onclick = function(){
+    modal.style.display = "block";
+    modalImg.src = this.src;
+    captionText.innerHTML = this.alt;
+    }
+
+    img3.onclick = function(){
+    modal.style.display = "block";
+    modalImg.src = this.src;
+    captionText.innerHTML = this.alt;
+    }
+
+    img4.onclick = function(){
+    modal.style.display = "block";
+    modalImg.src = this.src;
+    captionText.innerHTML = this.alt;
+    }
+
+    img5.onclick = function(){
+    modal.style.display = "block";
+    modalImg.src = this.src;
+    captionText.innerHTML = this.alt;
+    }
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+    modal.style.display = "none";
+    }
+</script>
+
+{% endblock %}
