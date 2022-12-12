@@ -29,8 +29,7 @@ def cryptoProjects():
     from ..models import daily_crypto_data
     import pandas as pd
     from datetime import datetime, timedelta
-    from sqlalchemy import and_, select
-    from sqlalchemy.engine import ScalarResult
+    from sqlalchemy import and_
     from flask import request
     import plotly_express as px
     import plotly
