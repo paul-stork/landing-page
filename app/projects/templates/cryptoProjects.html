@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% from 'bootstrap5/form.html' import render_field %}
+{% block title %}Crypto Values{%  endblock %}
+
+{% block content %}
+<br/>
+<br/>
+
+<div class ='container box_shadow'>
+    <form method='POST' id='filterForm'>
+    <div class='row'>
+        <div class='col-md-3 ban-text'>
+            {{ form.csrt_token }}
+            <label>Bitcoin Type:</label>
+            <br/>
+            <select class = 'form-select' name = 'cryptoSelector'>
+                {% for coin in coinList %}
+                    <option value ='{{coin}}'>{{coin}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class='col-sm'>{{ render_field(form.startDate) }}</div>
+        <div class='col-sm'>{{ render_field(form.endDate) }}</div>
+        <div class='col-sm'>
+            <br />
+            <input
+                action = '{{ url_for("projects.cryptoProjects") }}'
+                type = 'submit'
+                name = 'submit'
+                id = 'submit'
+                value = 'Filter'
+                class = 'btn btn-success'
+            />
+        </div>
+    </div>
+</div>
+
+<div class='container-fluid' id='plot'>
+    <div class='row box_shadow'>
+        <div class='row'>
+            <div id='lineChart' class='lineChart'></div>
+        </div>
+    </div>
+</div>
+
+<script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
+<script type ='text/javascript'>
+    var config = {responsive: true,
+                'displaylogo': false}
+    var lineChart = {{ crypto_line_json|safe }};
+
+    Plotly.setPlotConfig(config)
+    Plotly.newPlot('lineChart', lineChart, {});
+</script>
+{% endblock %}
+
