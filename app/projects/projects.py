@@ -13,7 +13,6 @@ class cryptoFilter(FlaskForm):
 
 @projects.route('/projects')
 def projectsHome():
-    
     return render_template('projects.html')
 
 """ 
@@ -24,8 +23,8 @@ def projectsHome():
     Here goes nothing!
 """
 
-@projects.route('/cryptoprojects', methods=['GET', 'POST'])
-def cryptoProjects():
+@projects.route('/cryptoproject', methods=['GET', 'POST'])
+def cryptoProject():
     from ..extensions import db 
     from ..models import daily_crypto_data
     import pandas as pd
@@ -82,11 +81,10 @@ def cryptoProjects():
     coinList = sorted(coinList)
     
     coinList.insert(0,'All Coins')
-    print(coinList)
+
     form.cryptoSelector.choices = coinList
     
-    title = f"{cryptoCoin} value between {startDate} and {endDate}"
-    
+    title = f"{cryptoCoin} value in USD between {startDate.strftime('%Y-%m-%d')} and {endDate.strftime('%Y-%m-%d')}"
    
     crypto_line = px.line(cryptoDF, x='time_period_end',
                           y='rate_close',
@@ -104,3 +102,7 @@ def cryptoProjects():
                            crypto_line_json = crypto_line_json,
                            form=form,
                            coinList = coinList)
+    
+@projects.route('/dataengineering', methods=['GET'])
+def dataengineeringprojects():
+    return render_template('cryptoapipull.html')

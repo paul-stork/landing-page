@@ -6,19 +6,22 @@
 <br/>
 <br/>
 
-<div class ='container box_shadow'>
-    <form method='POST' id='filterForm'>
-    <div class='row'>
-        {{ form.csrf_token() }}
-        <div class='col-md-3'>{{ render_field(form.cryptoSelector) }}</div>
-        <div class='col-sm'>{{ render_field(form.startDate) }}</div>
-        <div class='col-sm'>{{ render_field(form.endDate) }}</div>
-        <div class='col-sm'><br/>{{ render_field(form.submitButton) }}</div>
-            
+<div class ='container'>
+    <div class='row box_shadow main-div1'>
+        <form method='POST' id='filterForm'>
+        <div class='row'>
+            {{ form.csrf_token() }}
+            <div class='col-md-3'>{{ render_field(form.cryptoSelector) }}</div>
+            <div class='col-sm'>{{ render_field(form.startDate) }}</div>
+            <div class='col-sm'>{{ render_field(form.endDate) }}</div>
+            <div class='col-sm'><br/>{{ render_field(form.submitButton) }}</div>
+        </div>
     </div>
 </div>
 
-<div class='container-fluid' id='plot'>
+<br />
+
+<div class='container main-div1' id='plot'>
     <div class='row box_shadow'>
         <div class='row'>
             <div id='lineChart' class='lineChart'></div>
