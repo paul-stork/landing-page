@@ -9,29 +9,12 @@
 <div class ='container box_shadow'>
     <form method='POST' id='filterForm'>
     <div class='row'>
-        <div class='col-md-3 ban-text'>
-            {{ form.csrt_token }}
-            <label>Bitcoin Type:</label>
-            <br/>
-            <select class = 'form-select' name = 'cryptoSelector'>
-                {% for coin in coinList %}
-                    <option value ='{{coin}}'>{{coin}}</option>
-                {% endfor %}
-            </select>
-        </div>
+        {{ form.csrf_token() }}
+        <div class='col-md-3'>{{ render_field(form.cryptoSelector) }}</div>
         <div class='col-sm'>{{ render_field(form.startDate) }}</div>
         <div class='col-sm'>{{ render_field(form.endDate) }}</div>
-        <div class='col-sm'>
-            <br />
-            <input
-                action = '{{ url_for("projects.cryptoProjects") }}'
-                type = 'submit'
-                name = 'submit'
-                id = 'submit'
-                value = 'Filter'
-                class = 'btn btn-success'
-            />
-        </div>
+        <div class='col-sm'><br/>{{ render_field(form.submitButton) }}</div>
+            
     </div>
 </div>
 

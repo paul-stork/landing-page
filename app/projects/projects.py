@@ -1,6 +1,6 @@
 from flask import Flask, Blueprint, render_template
 from flask_wtf import FlaskForm
-from wtforms import DateField, SelectField
+from wtforms import DateField, SelectField, SubmitField
 
 
 projects = Blueprint('projects', __name__, template_folder='templates', static_folder='static')
@@ -8,7 +8,8 @@ projects = Blueprint('projects', __name__, template_folder='templates', static_f
 class cryptoFilter(FlaskForm):
     startDate = DateField("Start Date:")
     endDate = DateField("End Date:")
-    cryptoSelector = SelectField("Crypto Coin:")
+    cryptoSelector = SelectField("Crypto Coin:", coerce=str)
+    submitButton = SubmitField('Filter')
 
 @projects.route('/projects')
 def projectsHome():
@@ -50,10 +51,6 @@ def cryptoProjects():
             endDate = datetime.strptime(request.form.get('endDate') + 'T00:00:00', '%Y-%m-%dT%H:%M:%S')
         cryptoCoin = request.form.get('cryptoSelector')
         
-        print(startDate)
-        print(endDate)
-        print(cryptoCoin)
-        
         if cryptoCoin !='All Coins':
             cryptoInfo = db.session.execute(db.select(daily_crypto_data).order_by(daily_crypto_data.time_period_end).filter(and_(
                 daily_crypto_data.time_period_end.between(startDate, endDate)),
@@ -82,8 +79,11 @@ def cryptoProjects():
     for x in coinInfo:
         coinList.append(x)
     
+    coinList = sorted(coinList)
+    
     coinList.insert(0,'All Coins')
     print(coinList)
+    form.cryptoSelector.choices = coinList
     
     title = f"{cryptoCoin} value between {startDate} and {endDate}"
     
