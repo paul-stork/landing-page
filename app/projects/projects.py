@@ -83,6 +83,7 @@ def cryptoProject():
     coinList.insert(0,'All Coins')
 
     form.cryptoSelector.choices = coinList
+
     
     title = f"{cryptoCoin} value in USD between {startDate.strftime('%Y-%m-%d')} and {endDate.strftime('%Y-%m-%d')}"
    
