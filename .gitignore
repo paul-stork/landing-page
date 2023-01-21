@@ -132,3 +132,8 @@ app/aboutMe/templates/aboutMe_backup.html
 app/main/templates/home_backup.html
 .gitignore
 app/projects/templates/projects_backup.html
+export-0x2faf487a4414fe77e2327f0bf4ae2a264a776ad2 (2).csv
+export-0x2faf487a4414fe77e2327f0bf4ae2a264a776ad2 (3).csv
+bit_tmp.py
+bitcoin_query.py
+.gitignore
