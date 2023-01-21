@@ -1,22 +1,30 @@
 {% extends 'base.html' %}
-{% block title %}Home{% endblock %}
+{% block title %}Passion Projects{% endblock %}
 {% block content %}
     <div class="container">
         <div class='row'>
-            <h4 class = 'text-center font-color'>My home is in the works.</h4>
+            <h4 class = 'text-center font-color'>My Passion Projects.</h4>
         </div>
 
         <div class='row main-div1'>
             <div class='col'>
-                <p class='text-end'>I'm building my dream, come back soon.</p>
+                <h5>Data Engineering Projects</h5>
+                <p>Part of the process of analyzing data, is first aquiring the data. </p>
+                <p>I became interested in crypto coins, not because I have money to invest, but because I wanted to analyze
+                    data that was freely available and showed great volatility. What better place than the dollar price of 
+                    various crypto coins?
+                </p>
+                <a href='{{ url_for('projects.dataengineeringprojects') }}'><p>Here's how I did it</p></a>
+                <p>If you want to skip to the end and download the code for yourself here's a link to my GitHub repo: <a href='https://github.com/paul-stork/API_pull'>CoinAPI Call repo</a></p>
             </div>
-            <div class='col-md-auto'>
-                <img src="{{ url_for('static', filename='images/hal-gatewood-v7WyjiyXNr4-unsplash.jpg') }}" class='img-corners' />
-
-                <figcaption>Photo by <a href="https://unsplash.com/@halacious?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Hal Gatewood</a> on <a href="https://unsplash.com/s/photos/workbench?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
-                </figcaption>
+        </div>
+        <br />
+        <div class='row main-div1'>
+            <div class='col'>
+                <h5>Data Analysis Projects</h5>
+                <a href='{{ url_for('projects.cryptoProject') }}'><p>Coming Soon!</p></a>
+                <br />
+                <p>Est ipsum est enim dolor fugiat labore qui aliqua occaecat id. Exercitation laboris fugiat culpa labore occaecat ut. Laboris ex ea eiusmod ea consectetur nostrud irure occaecat commodo. Dolore velit incididunt pariatur deserunt dolor sint veniam duis officia magna in. Sit exercitation non aliqua anim aute proident aute minim non velit anim. Nisi commodo ullamco laboris esse exercitation elit cupidatat magna incididunt proident veniam enim.</p>
             </div>
-        </div> 
-
-    </div>
+        </div>
 {% endblock %}

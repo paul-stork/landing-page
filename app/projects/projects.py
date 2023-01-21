@@ -1,6 +1,6 @@
 from flask import Flask, Blueprint, render_template
 from flask_wtf import FlaskForm
-from wtforms import DateField, SelectField
+from wtforms import DateField, SelectField, SubmitField
 
 
 projects = Blueprint('projects', __name__, template_folder='templates', static_folder='static')
@@ -8,11 +8,11 @@ projects = Blueprint('projects', __name__, template_folder='templates', static_f
 class cryptoFilter(FlaskForm):
     startDate = DateField("Start Date:")
     endDate = DateField("End Date:")
-    cryptoSelector = SelectField("Crypto Coin:")
+    cryptoSelector = SelectField("Crypto Coin:", coerce=str)
+    submitButton = SubmitField('Filter')
 
 @projects.route('/projects')
 def projectsHome():
-    
     return render_template('projects.html')
 
 """ 
@@ -23,8 +23,8 @@ def projectsHome():
     Here goes nothing!
 """
 
-@projects.route('/cryptoprojects', methods=['GET', 'POST'])
-def cryptoProjects():
+@projects.route('/cryptoproject', methods=['GET', 'POST'])
+def cryptoProject():
     from ..extensions import db 
     from ..models import daily_crypto_data
     import pandas as pd
@@ -48,10 +48,6 @@ def cryptoProjects():
         if request.form.get('endDate') != '':
             endDate = datetime.strptime(request.form.get('endDate') + 'T00:00:00', '%Y-%m-%dT%H:%M:%S')
         cryptoCoin = request.form.get('cryptoSelector')
-        
-        print(startDate)
-        print(endDate)
-        print(cryptoCoin)
         
         if cryptoCoin !='All Coins':
             cryptoInfo = db.session.execute(db.select(daily_crypto_data).order_by(daily_crypto_data.time_period_end).filter(and_(
@@ -81,11 +77,14 @@ def cryptoProjects():
     for x in coinInfo:
         coinList.append(x)
     
+    coinList = sorted(coinList)
+    
     coinList.insert(0,'All Coins')
-    print(coinList)
+
+    form.cryptoSelector.choices = coinList
+
     
-    title = f"{cryptoCoin} value between {startDate} and {endDate}"
-    
+    title = f"{cryptoCoin} value in USD between {startDate.strftime('%Y-%m-%d')} and {endDate.strftime('%Y-%m-%d')}"
    
     crypto_line = px.line(cryptoDF, x='time_period_end',
                           y='rate_close',
@@ -103,3 +102,7 @@ def cryptoProjects():
                            crypto_line_json = crypto_line_json,
                            form=form,
                            coinList = coinList)
+    
+@projects.route('/dataengineering', methods=['GET'])
+def dataengineeringprojects():
+    return render_template('cryptoapipull.html')
