@@ -11,9 +11,9 @@ TEMPLATES_FOLDER = os.environ.get('templates')
 
 SECRET_KEY = os.environ.get('secret')
 
-FLASK_ENV = os.environ.get('')
-FLASK_DEBUG = os.environ.get('')
-TESTING = os.environ.get('')
+FLASK_ENV = os.environ.get('FLASK_ENV')
+FLASK_DEBUG = os.environ.get('FLASK_DEBUG')
+TESTING = os.environ.get('TESTING')
 
 DROPZONE_ALLOWED_FILE_CUSTOM = os.environ.get('DROPZONE_ALLOWED_FILE_CUSTOM')
 DROPZONE_ALLOWED_FILE_TYPE = os.environ.get('DROPZONE_ALLOWED_FILE_CUSTOM')
