@@ -39,7 +39,7 @@ def cryptoProject():
     
     # Define the initial variables:
     endDate = datetime.now()
-    startDate = endDate - timedelta(days=7)
+    startDate = endDate - timedelta(days=1)
     cryptoCoin = 'All Coins'
     
     if request.method == 'POST':
@@ -58,7 +58,8 @@ def cryptoProject():
             daily_crypto_data.time_period_end.between(startDate, endDate))).scalars()
                 
     else:
-        cryptoInfo = db.session.execute(db.select(daily_crypto_data).order_by(daily_crypto_data.time_period_end)).scalars()
+        cryptoInfo = db.session.execute(db.select(daily_crypto_data).order_by(daily_crypto_data.time_period_end).filter(
+            daily_crypto_data.time_period_end.between(startDate, endDate))).scalars()
     
     tempList = []
     
