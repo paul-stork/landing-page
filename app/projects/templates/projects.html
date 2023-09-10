@@ -22,9 +22,16 @@
         <div class='row main-div1'>
             <div class='col'>
                 <h5>Data Analysis Projects</h5>
-                <a href='{{ url_for('projects.cryptoProject') }}'><p>Coming Soon!</p></a>
                 <br />
-                <p>Est ipsum est enim dolor fugiat labore qui aliqua occaecat id. Exercitation laboris fugiat culpa labore occaecat ut. Laboris ex ea eiusmod ea consectetur nostrud irure occaecat commodo. Dolore velit incididunt pariatur deserunt dolor sint veniam duis officia magna in. Sit exercitation non aliqua anim aute proident aute minim non velit anim. Nisi commodo ullamco laboris esse exercitation elit cupidatat magna incididunt proident veniam enim.</p>
+                <h6>Crypto Coin Dashboard</h6>
+                <a href='{{ url_for('projects.cryptoProject') }}'><img src="{{ url_for('static', filename='images/plot_thumbnail.jpg') }}" 
+                    width='250'
+                    height='88' /></a>
+                <br />
+                <br />
+                <p>So, we now have a little bit of data about the price of various CryptoCoins stored in our PostgreSQL database. The question becomes: What can we do with it?
+                    I built a simple Dashboard to allow the end user to filter the data by Coin type, Start Date, and Finish Date. 
+                </p>
             </div>
         </div>
 {% endblock %}
