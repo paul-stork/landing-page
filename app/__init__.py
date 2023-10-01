@@ -1,12 +1,12 @@
-from flask import Flask
+# Flask 3.0 doesn't like Flask_Dropzone, or is it the other way around... either way...
+
+from flask import Flask, url_for
 import os
 from flask_bootstrap import Bootstrap5
-from flask_dropzone import Dropzone
 from dotenv import load_dotenv
 
 load_dotenv()
 
-dropzone = Dropzone()
 bootstrap = Bootstrap5()
 
 def create_app():
@@ -15,7 +15,6 @@ def create_app():
     app.config.from_pyfile('settings.py')
     
     bootstrap.init_app(app)
-    dropzone.init_app(app)
     
     from .extensions import db
     db.init_app(app)
@@ -28,5 +27,6 @@ def create_app():
     
     from .projects.projects import projects
     app.register_blueprint(projects)
+    
     
     return app
