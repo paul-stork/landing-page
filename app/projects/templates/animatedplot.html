@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block title %}Animated Plot{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class='row'>
+            <h4 class = 'text-center font-color'>How to animate a plot.</h4>
+        </div>
+
+        <div class='row main-div1'>
+            <div class='col'>
+                <h5>Project Overview:</h5>
+                <p>So, there I was minding my own business when I came across a post on Reddit: <a href='https://www.reddit.com/r/Python/comments/zjtqsy/pynimate_python_package_for_statistical_data/'>Pynimate</a>. </p>
+                <p>I decided that I wanted to try this out for myself! So, I dug into my crypto coin dataset and pulled the last 30 days worth of data. </p>
+        </div>
+        <div class='row main-div1'>
+            <div class='col'>
+                <h5>Data Analysis Projects</h5>
+                <br />
+                <p>
+                    How did I make this? I used a library called Pynimate to bring the data into a Pandas dataframe and then plotted using Matplotlib and Pynimate. Here's the 
+                    source code in GitHub: <a href='https://github.com/paul-stork/data_animation'>data_animation</a>
+                </p>
+
+                <h6>Bitcoin Prices for the last 30 days</h6>
+                <img src="{{ url_for('static', filename='images/Bitcoin_Price_activity_1_month.gif') }}" 
+                    width='1000'
+                    height='500'
+                    class="center" />
+                <br />
+                <br />
+                <p>So as you can see, the Bitcoin market is quite volatile.</p>
+            </div>
+        </div>
+{% endblock %}

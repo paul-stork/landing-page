@@ -107,3 +107,7 @@ def cryptoProject():
 @projects.route('/dataengineering', methods=['GET'])
 def dataengineeringprojects():
     return render_template('cryptoapipull.html')
+
+@projects.route('/animatedplot', methods=['GET'])
+def animatedplot():
+    return render_template('animatedplot.html')
