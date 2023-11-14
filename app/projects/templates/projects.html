@@ -32,6 +32,15 @@
                 <p>So, we now have a little bit of data about the price of various CryptoCoins stored in our PostgreSQL database. The question becomes: What can we do with it?
                     I built a simple Dashboard to allow the end user to filter the data by Coin type, Start Date, and Finish Date. 
                 </p>
+                <br />
+                <h6>Data Animation Project</h6>
+                <a href='{{ url_for('projects.animatedplot') }}'><img src="{{ url_for('static', filename='images/animated_data.png') }}" 
+                    width='250'
+                    height='88' /></a>
+                <br />
+                <br />
+                <p>I wanted to see if I could create an animated Data plot using a GIF file. Here's the results! 
+                </p>
             </div>
         </div>
 {% endblock %}
