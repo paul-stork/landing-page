@@ -1,9 +1,12 @@
 from flask import Flask, Blueprint, render_template
 from flask_wtf import FlaskForm
 from wtforms import DateField, SelectField, SubmitField
+import logging
 
 
 projects = Blueprint('projects', __name__, template_folder='templates', static_folder='static')
+
+logger = logging.getLogger('app.app')
 
 class cryptoFilter(FlaskForm):
     startDate = DateField("Start Date:")
@@ -34,6 +37,8 @@ def cryptoProject():
     import plotly_express as px
     import plotly
     import json
+    import logging
+    import app
     
     form = cryptoFilter()
     
@@ -86,7 +91,7 @@ def cryptoProject():
 
     
     title = f"{cryptoCoin} value in USD between {startDate.strftime('%Y-%m-%d')} and {endDate.strftime('%Y-%m-%d')}"
-    print(cryptoDF.columns)
+    logger.info(cryptoDF.columns)
     crypto_line = px.line(cryptoDF, 
                           x='time_period_end',
                           y='rate_close',
