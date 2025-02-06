@@ -86,8 +86,9 @@ def cryptoProject():
 
     
     title = f"{cryptoCoin} value in USD between {startDate.strftime('%Y-%m-%d')} and {endDate.strftime('%Y-%m-%d')}"
-   
-    crypto_line = px.line(cryptoDF, x='time_period_end',
+    # print(cryptoDF.columns)
+    crypto_line = px.line(cryptoDF, 
+                          x='time_period_end',
                           y='rate_close',
                           color='exchange_id',
                           title = title,
