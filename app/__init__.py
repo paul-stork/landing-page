@@ -16,6 +16,9 @@ bootstrap = Bootstrap5()
 def create_app():
     app = Flask(__name__)
     
+    root = logging.getLogger()
+    root.addHandler(default_handler)
+    
     app.logger.setLevel(logging.INFO)
     
     dictConfig({
