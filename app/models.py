@@ -1,7 +1,7 @@
 from .extensions import db
 
-class daily_crypto_data(db.Model):
-    __tablename__ = "daily_crypto_data"
+class daily_crypto_prod(db.Model):
+    __tablename__ = "daily_crypto_prod"
     __table_args__ = {"schema":"crypto_data"}
     id = db.Column(db.Integer, primary_key=True)
     exchange_id = db.Column(db.VARCHAR(5))

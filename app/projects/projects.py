@@ -29,16 +29,14 @@ def projectsHome():
 @projects.route('/cryptoproject', methods=['GET', 'POST'])
 def cryptoProject():
     from ..extensions import db 
-    from ..models import daily_crypto_data
+    from ..models import daily_crypto_prod
     import pandas as pd
     from datetime import datetime, timedelta
-    from sqlalchemy import and_
+    from sqlalchemy import and_, exc
     from flask import request
     import plotly_express as px
     import plotly
     import json
-    import logging
-    import app
     
     form = cryptoFilter()
     
@@ -46,38 +44,41 @@ def cryptoProject():
     endDate = datetime.now()
     startDate = endDate - timedelta(days=1)
     cryptoCoin = 'All Coins'
-    
-    if request.method == 'POST':
-        if request.form.get('startDate') != '':
-            startDate = datetime.strptime(request.form.get('startDate') + "T00:00:00", '%Y-%m-%dT%H:%M:%S')
-        if request.form.get('endDate') != '':
-            endDate = datetime.strptime(request.form.get('endDate') + 'T00:00:00', '%Y-%m-%dT%H:%M:%S')
-        cryptoCoin = request.form.get('cryptoSelector')
-        
-        if cryptoCoin !='All Coins':
-            cryptoInfo = db.session.execute(db.select(daily_crypto_data).order_by(daily_crypto_data.time_period_end).filter(and_(
-                daily_crypto_data.time_period_end.between(startDate, endDate)),
-                daily_crypto_data.exchange_id==cryptoCoin)).scalars()
+    try:
+        if request.method == 'POST':
+            if request.form.get('startDate') != '':
+                startDate = datetime.strptime(request.form.get('startDate') + "T00:00:00", '%Y-%m-%dT%H:%M:%S')
+            if request.form.get('endDate') != '':
+                endDate = datetime.strptime(request.form.get('endDate') + 'T00:00:00', '%Y-%m-%dT%H:%M:%S')
+            cryptoCoin = request.form.get('cryptoSelector')
+            
+            if cryptoCoin !='All Coins':
+                cryptoInfo = db.session.execute(db.select(daily_crypto_prod).order_by(daily_crypto_prod.time_period_end).filter(and_(
+                    daily_crypto_prod.time_period_end.between(startDate, endDate)),
+                    daily_crypto_prod.exchange_id==cryptoCoin)).scalars()
+            else:
+                cryptoInfo = db.session.execute(db.select(daily_crypto_prod).order_by(daily_crypto_prod.time_period_end).filter(
+                daily_crypto_prod.time_period_end.between(startDate, endDate))).scalars()
+                    
         else:
-            cryptoInfo = db.session.execute(db.select(daily_crypto_data).order_by(daily_crypto_data.time_period_end).filter(
-            daily_crypto_data.time_period_end.between(startDate, endDate))).scalars()
-                
-    else:
-        cryptoInfo = db.session.execute(db.select(daily_crypto_data).order_by(daily_crypto_data.time_period_end).filter(
-            daily_crypto_data.time_period_end.between(startDate, endDate))).scalars()
-    
+            cryptoInfo = db.session.execute(db.select(daily_crypto_prod).order_by(daily_crypto_prod.time_period_end).filter(
+                daily_crypto_prod.time_period_end.between(startDate, endDate))).scalars()
+    except exc.SQLAlchemyError as e:
+        logger.error(e)
     tempList = []
     
     for x in cryptoInfo:
+        logger.info(f"x: {x}")
         tempVar = x.__dict__
         tempDict = dict(tempVar)
         tempDict.pop('_sa_instance_state', None)
+        logger.info(f'tempDict: {tempDict}')
         tempList.append(tempDict)
-        
+    logger.info(f"tempList: {tempList}")    
     cryptoDF = pd.DataFrame(tempList)
     
     
-    coinInfo = db.session.execute(db.select(daily_crypto_data.exchange_id.distinct())).scalars().all()
+    coinInfo = db.session.execute(db.select(daily_crypto_prod.exchange_id.distinct())).scalars().all()
     
     coinList = []
     for x in coinInfo:
@@ -91,12 +92,11 @@ def cryptoProject():
 
     
     title = f"{cryptoCoin} value in USD between {startDate.strftime('%Y-%m-%d')} and {endDate.strftime('%Y-%m-%d')}"
-    logger.info(cryptoDF.columns)
-    crypto_line = px.line(cryptoDF, 
-                          x='time_period_end',
-                          y='rate_close',
-                          color='exchange_id',
-                          title = title,
+    crypto_line = px.line(data_frame=cryptoDF, \
+                          x='time_period_end',\
+                          y='rate_close',\
+                          color='exchange_id',\
+                          title = title,\
                           labels={
                               'time_period_end':'Date and Time',
                               'rate_close':'Price ($)',
