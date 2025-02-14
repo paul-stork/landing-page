@@ -41,7 +41,7 @@ def cryptoProject():
     form = cryptoFilter()
     
     # Define the initial variables:
-    endDate = datetime.now()
+    endDate = datetime.strptime("2025-02-10T00:00:00", '%Y-%m-%dT%H:%M:%S')
     startDate = endDate - timedelta(days=1)
     cryptoCoin = 'All Coins'
     try:
