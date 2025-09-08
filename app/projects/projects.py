@@ -53,16 +53,16 @@ def cryptoProject():
             cryptoCoin = request.form.get('cryptoSelector')
             
             if cryptoCoin !='All Coins':
-                cryptoInfo = db.session.execute(db.select(daily_crypto_prod).order_by(daily_crypto_prod.time_period_end).filter(and_(
-                    daily_crypto_prod.time_period_end.between(startDate, endDate)),
+                cryptoInfo = db.session.execute(db.select(daily_crypto_prod).order_by(daily_crypto_prod.time_close).filter(and_(
+                    daily_crypto_prod.time_close.between(startDate, endDate)),
                     daily_crypto_prod.exchange_id==cryptoCoin)).scalars()
             else:
-                cryptoInfo = db.session.execute(db.select(daily_crypto_prod).order_by(daily_crypto_prod.time_period_end).filter(
-                daily_crypto_prod.time_period_end.between(startDate, endDate))).scalars()
+                cryptoInfo = db.session.execute(db.select(daily_crypto_prod).order_by(daily_crypto_prod.time_close).filter(
+                daily_crypto_prod.time_close.between(startDate, endDate))).scalars()
                     
         else:
-            cryptoInfo = db.session.execute(db.select(daily_crypto_prod).order_by(daily_crypto_prod.time_period_end).filter(
-                daily_crypto_prod.time_period_end.between(startDate, endDate))).scalars()
+            cryptoInfo = db.session.execute(db.select(daily_crypto_prod).order_by(daily_crypto_prod.time_close).filter(
+                daily_crypto_prod.time_close.between(startDate, endDate))).scalars()
     except exc.SQLAlchemyError as e:
         logger.error(e)
     tempList = []
@@ -98,7 +98,7 @@ def cryptoProject():
                           color='exchange_id',\
                           title = title,\
                           labels={
-                              'time_period_end':'Date and Time',
+                              'time_close':'Date and Time',
                               'rate_close':'Price ($)',
                               'exchange_id':'Crypto Coin'
                           })
