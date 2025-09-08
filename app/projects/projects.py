@@ -41,7 +41,7 @@ def cryptoProject():
     form = cryptoFilter()
     
     # Define the initial variables:
-    endDate = datetime.strptime("2025-02-10T00:00:00", '%Y-%m-%dT%H:%M:%S')
+    endDate = datetime.now()
     startDate = endDate - timedelta(days=1)
     cryptoCoin = 'All Coins'
     try:
@@ -93,7 +93,7 @@ def cryptoProject():
     
     title = f"{cryptoCoin} value in USD between {startDate.strftime('%Y-%m-%d')} and {endDate.strftime('%Y-%m-%d')}"
     crypto_line = px.line(data_frame=cryptoDF, \
-                          x='time_period_end',\
+                          x='time_close',\
                           y='rate_close',\
                           color='exchange_id',\
                           title = title,\
