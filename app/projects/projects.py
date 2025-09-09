@@ -42,7 +42,7 @@ def cryptoProject():
     
     # Define the initial variables:
     endDate = datetime.now() - timedelta(days=1)
-    startDate = endDate - timedelta(days=1)
+    startDate = endDate - timedelta(days=7)
     cryptoCoin = 'All Coins'
     try:
         if request.method == 'POST':
