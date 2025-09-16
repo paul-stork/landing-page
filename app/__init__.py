@@ -53,5 +53,8 @@ def create_app():
     from .projects.projects import projects
     app.register_blueprint(projects)
     
+    from .contactMe.contactMe import contactMe
+    app.register_blueprint(contactMe)
+    
     
     return app
