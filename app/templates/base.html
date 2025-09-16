@@ -22,6 +22,7 @@
         <script src="https://unpkg.com/browse/htmx.org@1.8.4/dist/htmx.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
         <script src="https://unpkg.com/htmx.org@1.8.4" integrity="sha384-wg5Y/JwF7VxGk4zLsJEcAojRtlVp1FKKdGy1qN+OMtdq72WRvX/EdRdqg/LOhYeV" crossorigin="anonymous"></script>
+        <script src="{{ url_for('static', filename='js/dropdown_nav.js') }}"></script>
         
         <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
 
@@ -43,13 +44,26 @@
                 </a>
                 <ul class="navbar-nav d-flex flex-row me-1">
                     <li class="nav-item me-3 me-lg-0">
-                        <a class="nav-link" href="{{ url_for('aboutMe.aboutme') }}">About me</a>
+                        <button class="dropbtn nav-link" onclick="window.location.href = '{{ url_for('aboutMe.aboutme') }}';">
+                            About me
+                        </button>
                     </li>
                     <li class="nav-item me-3 me-lg-0">
-                        <a class="nav-link" href="{{ url_for('projects.projectsHome') }}">Passion Projects</a>
+                         <div class="dropdown">
+                        <button onclick="myFunction()" class="dropbtn nav-link">Projects</button>
+                        <div id="myDropdown" class="dropdown-content">
+                            <a href="{{ url_for('projects.projectsHome') }}">Projects Home</a>
+                            <a href="{{ url_for('projects.cryptoProject') }}">Crypto Dash</a>
+                            <a href="{{ url_for('projects.animatedplot') }}">Animated Plot</a>
+                            <a href="{{ url_for('projects.dataengineeringprojects') }}">Data Engineering</a>
+                        </div>
+                        </div> 
                     </li>
                     <li class="nav-item me-3 me-lg-0">
-                        <a class="nav-link" href="#">Contact Me</a>
+                        <button class="dropbtn nav-link" onclick="window.location.href = '#';"">
+                            Contact Me
+                        </button>
+                        
                     </li>
                 </ul>
             </div>
