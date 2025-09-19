@@ -26,6 +26,11 @@ def projectsHome():
     Here goes nothing!
 """
 
+def crypto_table():
+    import plotly.graph_objects as go
+    
+    pass
+
 @projects.route('/cryptoproject', methods=['GET', 'POST'])
 def cryptoProject():
     from ..extensions import db 
@@ -35,6 +40,7 @@ def cryptoProject():
     from sqlalchemy import and_, exc
     from flask import request
     import plotly_express as px
+    import plotly.graph_objects as go
     import plotly
     import json
     
@@ -77,7 +83,6 @@ def cryptoProject():
     logger.info(f"tempList: {tempList}")    
     cryptoDF = pd.DataFrame(tempList)
     
-    
     coinInfo = db.session.execute(db.select(daily_crypto_prod.exchange_id.distinct())).scalars().all()
     
     coinList = []
@@ -103,10 +108,34 @@ def cryptoProject():
                               'exchange_id':'Crypto Coin'
                           })
     
+    crypto_data_DF = cryptoDF[['exchange_id', 'time_open', 'time_close', 'rate_open', 'rate_low', 'rate_high', 'rate_close']]
+    
+    crypto_data_DF[['rate_open', 'rate_low', 'rate_high', 'rate_close']] = crypto_data_DF[['rate_open', 'rate_low', 'rate_high', 'rate_close']].astype(float).round(decimals=2)
+    
+    crypto_data_DF = crypto_data_DF.rename(columns={'exchange_id' : 'Crypto Coind ID', 
+                                   'time_open' : 'Time Open (UTC)', 
+                                   'time_close' : 'Time Close (UTC)', 
+                                   'rate_open' : 'Opening Price ($)', 
+                                   'rate_low' : 'Lowest Price ($)', 
+                                   'rate_high' : 'Highest Price ($)', 
+                                   'rate_close' : 'Closing Price ($)'})
+        
+    crypto_data_table = go.Figure(data=[go.Table(
+        header=dict(values=list(crypto_data_DF.columns),
+            align=['center']
+            ),
+        cells = dict(values=[crypto_data_DF[col] for col in crypto_data_DF.columns],
+                      align=['left']),
+        ),
+        ]
+    )
+    
     crypto_line_json = json.dumps(crypto_line, cls=plotly.utils.PlotlyJSONEncoder)
-     
+    crypto_table_json = json.dumps(crypto_data_table, cls=plotly.utils.PlotlyJSONEncoder)
+             
     return render_template('cryptoProjects.html', 
                            crypto_line_json = crypto_line_json,
+                           crypto_table_json = crypto_table_json,
                            form=form,
                            coinList = coinList)
     

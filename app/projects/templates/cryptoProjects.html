@@ -25,18 +25,21 @@
     <div class='row'>
         <div class='row'>
             <div id='lineChart' class='lineChart'></div>
+            <div id='dataTable' class='dataTable'></div>
         </div>
     </div>
 </div>
 
-<script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
+<script src="https://cdn.plot.ly/plotly-3.1.0.min.js" charset="utf-8"></script>
 <script type ='text/javascript'>
     var config = {responsive: true,
                 'displaylogo': false}
     var lineChart = {{ crypto_line_json|safe }};
+    var dataTable = {{ crypto_table_json|safe }};
 
     Plotly.setPlotConfig(config)
     Plotly.newPlot('lineChart', lineChart, {});
+    Plotly.newPlot('dataTable', dataTable.data, dataTable.layout);
 </script>
 {% endblock %}
 
